@@ -3,7 +3,7 @@ from sitemap import get_recipe_urls
 from recipe_parser import scrape_recipe
 import time
 
-urls = get_recipe_urls(limit=50)
+urls = get_recipe_urls(limit=500)
 
 init_db()
 
