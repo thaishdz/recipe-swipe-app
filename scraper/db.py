@@ -10,6 +10,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             url TEXT UNIQUE NOT NULL,
             title TEXT NOT NULL,
+            category TEXT,
             difficulty TEXT,
             cooking_time TEXT,
             image_header TEXT,
@@ -31,11 +32,12 @@ def recipe_exists(url: str) -> bool:
 def save_recipe(recipe: dict, url: str):
     connection = sqlite3.connect(DB_PATH)
     connection.execute("""
-        INSERT OR IGNORE INTO recipes (url, title, difficulty, cooking_time, image_header, ingredients_list, steps)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT OR IGNORE INTO recipes (url, title, category, difficulty, cooking_time, image_header, ingredients_list, steps)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         url,
         recipe["title"],
+        recipe["category"],
         recipe["difficulty"],
         recipe["cooking_time"],
         recipe["image_header"],
