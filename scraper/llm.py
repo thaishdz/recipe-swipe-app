@@ -18,7 +18,7 @@ Categoría:
         "model": "qwen2.5:7b",
         "prompt": prompt,
         "stream": False,
-        "options": {"temperature": 0} # ollama's default is 0.8
+        # "options": {"temperature": 0}  ollama's default is 0.8
     }
 
     try:
