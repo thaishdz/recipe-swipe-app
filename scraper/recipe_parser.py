@@ -27,8 +27,9 @@ def scrape_recipe(url):
             text = li.get_text(strip=True)
             steps.append({"image": image, "text": text})
 
-        image_header = soup.select_one("div.carousel-inner img")["src"]
-        if image_header.startswith("/"):
+        image_tag = soup.select_one("div.carousel-inner img")
+        image_header = image_tag.get("src") if img_tag else None
+        if image_header and image_header.startswith("/"):
             image_header = BASE_URL + image_header
 
         return {
