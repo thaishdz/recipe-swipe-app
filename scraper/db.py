@@ -1,7 +1,8 @@
+from pathlib import Path
 import sqlite3
 import json
 
-DB_PATH = "recipes.db"
+DB_PATH = Path(__file__).parent / "recipes.db"
 
 def init_db():
     connection = sqlite3.connect(DB_PATH)
@@ -46,3 +47,29 @@ def save_recipe(recipe: dict, url: str):
     ))
     connection.commit()
     connection.close()
+
+
+def get_recipes_by_category(category: str, limit: int = 10) -> list[dict]:
+    connection = sqlite3.connect(DB_PATH)
+    connection.row_factory = sqlite3.Row
+    cursor = connection.execute(
+        "SELECT * FROM recipes WHERE category = ? LIMIT ?",
+        (category, limit)
+    )
+    rows = cursor.fetchall()
+    connection.close()
+
+    recipes = []
+
+    for row in rows:
+        recipe = dict(row)
+        recipe["ingredients_list"] = json.loads(recipe["ingredients_list"])
+        recipe["steps"] = json.loads(recipe["steps"])
+        recipes.append(recipe)
+    return recipes
+
+
+if __name__ == "__main__":
+    recipes = get_recipes_by_category("Postre", limit=3)
+    for recipe in recipes:
+        print(recipe["title"], "-", recipe["difficulty"])

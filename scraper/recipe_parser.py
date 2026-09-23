@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 BASE_URL = "https://www.petitchef.es"
-URL = "https://www.petitchef.es/recetas/plato/cottage-pie-pastel-de-carne-y-patatas-receta-inglesa-fid-1578918"
+TEST_URL = "https://www.petitchef.es/recetas/plato/cottage-pie-pastel-de-carne-y-patatas-receta-inglesa-fid-1578918"
 
 def scrape_recipe(url):
     try:
@@ -61,4 +61,4 @@ def get_image_header(page):
     return absolute_url(image_tag.get("src") if image_tag else None)
 
 if __name__ == "__main__":
-    print(scrape_recipe(URL))
+    print(scrape_recipe(TEST_URL))
